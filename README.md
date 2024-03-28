@@ -28,8 +28,7 @@ const { write } = await import('https://esm.sh/spect.js');
 write(document.body, Counter);
 ```
 
-**Spect** is true 'Write Less Do More'JavaScript library for empowering the DOM manipulation.\
-less boilerplate, safe, built on top of standard html reference.
+**Spect** is the true 'Write Less Do More' JavaScript library for empowering the DOM manipulation.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/js-qfh42g?file=index.js)
 
@@ -336,14 +335,37 @@ const sampleAttrModule = $ => attr => attr`
 
     :hover {
         *color=blue;
+        @click=${() => alert('I am hovered')}
     };
-`;
+
+    button {
+        @@click=${() => alert('prevented by parent!')}
+    };
+
+    div[${someAttrModule}=${true}] {
+        span {
+            .moreDeeperChild=${true}
+        };
+    };
+
+    ::selection {
+        *background-color=black; 
+    };
+`; // psuedo elements are style attributes only
 
 const WithAttributeModule = () => html => html`
-    <div>
-        <button ${sampleAttrModule}=system; />
+    <div ${sampleAttrModule}=system;>
+        <button></button>
     </div>
 `
+```
+
+```javascript
+import layout from '@spect.js/layout';
+
+const HowToCenterADiv = $ => html => html`
+    <div ${layout.center}>Now I am centered!</div>
+`;
 ```
 
 ```javascript
